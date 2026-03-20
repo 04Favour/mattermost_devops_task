@@ -74,6 +74,7 @@ mattermost/
 | [PostgreSQL StatefulSet](./docs/postgres.md) | Persistent database setup on Kubernetes |
 | [Mattermost Deployment](./docs/mattermost.md) | App deployment, service, and ingress |
 | [Troubleshooting](./docs/troubleshooting.md) | Common errors and fixes encountered |
+| [Teardown Guide](./docs/teardown.md) | Clean destroy order to avoid orphaned AWS resources |
 
 ---
 
