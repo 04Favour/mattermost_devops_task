@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: mattermost
+  namespace: default
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: mattermost
+  template: 
+    metadata: 
+      labels: 
+        app: mattermost
+    spec:
+      initContainers: 
+        - name: wait-for-postgres
+          image: busybox
+          command: ['sh', '-c', 'until nc -z postgres 5432; do echo waiting for postgres; sleep 2; done']
+      containers: 
+        - name: mattermost
+          image: mattermost/mattermost-team-edition:latest
+          ports: 
+            - containerPort: 8065
+          env: 
+            - name: MM_SQLSETTINGS_DATASOURCE
+              valueFrom:
+                secretKeyRef:
+                  name: mattermost-secret
+                  key: MM_SQLSETTINGS_DATASOURCE
+            - name: MM_SERVICESETTINGS_SITEURL
+              value: "http://k8s-default-mattermo-84c1dbbba5-244206484.us-east-1.elb.amazonaws.com"
