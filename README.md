@@ -75,6 +75,7 @@ mattermost/
 | [Mattermost Deployment](./docs/mattermost.md) | App deployment, service, and ingress |
 | [Troubleshooting](./docs/troubleshooting.md) | Common errors and fixes encountered |
 | [Teardown Guide](./docs/teardown.md) | Clean destroy order to avoid orphaned AWS resources |
+| [EBS-CSI-DRIVER CrashLoopBackOff](./docs/troubleshooting__ii.md) | Steps to resolve EBS-CSI CrashLoopBack |
 
 ---
 
@@ -125,7 +126,8 @@ aws eks create-addon \
   --cluster-name mattermost-cluster \
   --addon-name aws-ebs-csi-driver \
   --service-account-role-arn arn:aws:iam::<YOUR_ACCOUNT_ID>:role/AmazonEKS_EBS_CSI_DriverRole \
-  --region us-east-1
+  --region us-east-1 \
+  --force
 ```
 
 ### 4. Deploy PostgreSQL

@@ -1,0 +1,35 @@
+grafana: 
+  adminPassword: "mysecretpassword"
+  ingress: 
+    enabled: true
+    ingressClassName: alb
+    annotations: 
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+    hosts: 
+      - grafana.k8s-mattermo-mattermo-a4b46d69e5-1657383329.us-east-1.elb.amazonaws.com
+
+prometheus:
+  prometheusSpec: 
+    serviceMonitorSelectorNilUsesHelmValues: false
+    retention: 15d
+    storageSpec: 
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp2
+          accessModes: ["ReadWriteOnce"]
+          resources: 
+            requests: 
+              storage: 20Gi
+
+alertmanager: 
+  alertManagerSpec:
+    storage: 
+      volumeClaimTemplate:
+        spec:
+          storageClassName: gp2
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests: 
+              storage: 5Gi

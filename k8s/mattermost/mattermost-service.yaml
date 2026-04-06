@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata: 
   name: mattermost
-  namespace: default
+  namespace: mattermost-cluster
 spec: 
   selector: 
     app: mattermost
