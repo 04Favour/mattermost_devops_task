@@ -136,6 +136,9 @@ aws iam create-policy \
   --policy-name AWSLoadBalancerControllerIAMPolicy \
   --policy-document file://iam_policy.json
 
+# Delete existing serviceaccount
+eksctl delete iamserviceaccount --cluster mattermost-cluster --name aws-load-balancer-controller --namespace kube-system
+
 # 3. Create the IAM service account
 eksctl create iamserviceaccount \
   --cluster mattermost-cluster \
@@ -143,7 +146,8 @@ eksctl create iamserviceaccount \
   --name aws-load-balancer-controller \
   --role-name AmazonEKSLoadBalancerControllerRole \
   --attach-policy-arn arn:aws:iam::<ACCOUNT_ID>:policy/AWSLoadBalancerControllerIAMPolicy \
-  --approve
+  --approve \
+  --override-existing-serviceaccounts
 
 # 4. Install via Helm
 helm repo add eks https://aws.github.io/eks-charts

@@ -108,6 +108,19 @@ aws eks update-kubeconfig --region us-east-1 --name mattermost-cluster
 
 ### 3. Install the EBS CSI Driver
 ```bash
+aws eks describe-cluster \
+  --name mattermost-cluster \
+  --query "cluster.identity.oidc.issuer" \
+  --output text
+
+aws iam create-role \
+  --role-name AmazonEKS_EBS_CSI_DriverRole \
+  --assume-role-policy-document file://ebs-csi-trust-policy.json  
+
+aws iam attach-role-policy \
+  --role-name AmazonEKS_EBS_CSI_DriverRole \
+  --policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy
+
 eksctl utils associate-iam-oidc-provider \
   --region us-east-1 \
   --cluster mattermost-cluster \
@@ -121,6 +134,12 @@ eksctl create iamserviceaccount \
   --role-only \
   --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
   --approve
+
+kubectl annotate serviceaccount ebs-csi-controller-sa \
+  -n kube-system \
+  eks.amazonaws.com/role-arn=arn:aws:iam::032098306215:role/AmazonEKS_EBS_CSI_DriverRole \
+  --overwrite
+
 
 aws eks create-addon \
   --cluster-name mattermost-cluster \

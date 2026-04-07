@@ -29,4 +29,4 @@ spec:
                   name: mattermost-secret
                   key: MM_SQLSETTINGS_DATASOURCE
             - name: MM_SERVICESETTINGS_SITEURL
-              value: "k8s-mattermo-mattermo-a4b46d69e5-1657383329.us-east-1.elb.amazonaws.com"
+              value: "http://k8s-mattermo-mattermo-a4b46d69e5-1657383329.us-east-1.elb.amazonaws.com"

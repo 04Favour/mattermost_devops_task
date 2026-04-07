@@ -72,3 +72,19 @@ kubectl rollout status deployment/ebs-csi-controller -n kube-system
 ```
 
 All pods should now show `6/6 Running`.
+
+**Just In case serviceaccount for loadbalancer acts up:**
+```bash
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-controller
+  namespace: kube-system
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::032098306215:role/AmazonEKSLoadBalancerControllerRole
+EOF
+```

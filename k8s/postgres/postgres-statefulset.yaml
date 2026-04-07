@@ -31,7 +31,7 @@ spec:
         name: postgres-data
       spec: 
         accessModes: ["ReadWriteOnce"]
-        storageClassName: gp2
+        storageClassName: gp2-csi
         resources: 
           requests:
             storage: 10Gi
