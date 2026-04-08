@@ -146,12 +146,12 @@ aws eks create-addon \
   --addon-name aws-ebs-csi-driver \
   --service-account-role-arn arn:aws:iam::<YOUR_ACCOUNT_ID>:role/AmazonEKS_EBS_CSI_DriverRole \
   --region us-east-1 \
-  --force
 ```
 
 ### 4. Deploy PostgreSQL
 ```bash
 kubectl apply -f k8s/postgres/postgres-secret.yaml
+kubectl apply -f k8s/storage/gp2-csi.yaml
 kubectl apply -f k8s/postgres/postgres-statefulset.yaml
 kubectl apply -f k8s/postgres/postgres-service.yaml
 ```
