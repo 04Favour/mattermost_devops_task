@@ -1,0 +1,43 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: mattermost-sla-rules
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: mattermost.sla
+      rules:
+        - alert: MattermostDown
+          expr: up{job="mattermost"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Mattermost is down"
+            description: "Mattermost pod unreachable for over 1 minute"
+
+        - alert: MattermostHighLatency
+          expr: histogram_quantile(0.95, rate(mattermost_api_time_seconds_bucket[5m])) > 2
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Mattermost p95 latency above 2s"
+
+        - alert: MattermostHighErrorRate
+          expr: rate(mattermost_http_errors_total[5m]) > 0.05
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Mattermost error rate above 5%"
+
+        - alert: MattermostPostgresDown
+          expr: up{job="postgres"} == 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Postgres is unreachable"

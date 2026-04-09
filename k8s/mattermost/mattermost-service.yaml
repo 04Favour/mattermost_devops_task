@@ -7,6 +7,10 @@ spec:
   selector: 
     app: mattermost
   ports:
-    - port: 8065
+    - name: http
+      port: 8065
       targetPort: 8065
+    - name: metrics
+      port: 8067
+      targetPort: 8067
   type: ClusterIP

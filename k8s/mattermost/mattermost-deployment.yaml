@@ -30,3 +30,7 @@ spec:
                   key: MM_SQLSETTINGS_DATASOURCE
             - name: MM_SERVICESETTINGS_SITEURL
               value: "http://k8s-mattermo-mattermo-a4b46d69e5-1511767785.us-east-1.elb.amazonaws.com"
+            - name: MM_METRICSETTINGS_ENABLE
+              value: "true"
+            - name: MM_METRICSETTINGS_LISTENADDRESS
+              value: ":8067"
