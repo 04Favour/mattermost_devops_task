@@ -7,8 +7,8 @@ grafana:
       kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/target-type: ip
-    hosts: 
-      - grafana.k8s-mattermo-mattermo-a4b46d69e5-1511767785.us-east-1.elb.amazonaws.com
+    hosts: []
+      # - grafana.k8s-mattermo-mattermo-a4b46d69e5-1511767785.us-east-1.elb.amazonaws.com
 
 prometheus:
   prometheusSpec: 

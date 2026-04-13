@@ -1,3 +1,4 @@
+deploymentMode: SingleBinary
 loki:
   commonConfig:
     replication_factor: 1
@@ -9,3 +10,9 @@ singleBinary:
   persistence:
     storageClass: gp2-csi
     size: 10Gi
+read:
+  replicas: 0
+write:
+  replicas: 0
+backend:
+  replicas: 0
